@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/device_monitoring
+    username: devuser
+    password: devpass
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true # 쿼리 출력
+    properties:
+      hibernate:
+        format_sql: true # 쿼리 보기 좋게
+
+  sql:
+    init:
+      mode: always
+      # 한글 깨짐 방지
+      encoding: UTF-8
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
