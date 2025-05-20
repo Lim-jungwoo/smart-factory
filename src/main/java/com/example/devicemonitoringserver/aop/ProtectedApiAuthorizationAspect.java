@@ -16,6 +16,12 @@ public class ProtectedApiAuthorizationAspect {
 
     @Around("@within(protectedApi) || @annotation(protectedApi)")
     public Object checkRole(ProceedingJoinPoint joinPoint, ProtectedApi protectedApi) throws Throwable {
+        protectedApi = getAnnotation(joinPoint);
+
+        if (protectedApi == null) {
+            return joinPoint.proceed();
+        }
+
         String requiredRole = protectedApi.role();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -31,5 +37,19 @@ public class ProtectedApiAuthorizationAspect {
         }
 
         return joinPoint.proceed();
+    }
+
+    private ProtectedApi getAnnotation(ProceedingJoinPoint joinPoint) {
+        try {
+            Class<?> targetClass = joinPoint.getTarget().getClass();
+            ProtectedApi classAnnotation = targetClass.getAnnotation(ProtectedApi.class);
+            if (classAnnotation != null) return classAnnotation;
+
+            String methodName = joinPoint.getSignature().getName();
+            Class<?>[] paramTypes = ((org.aspectj.lang.reflect.MethodSignature) joinPoint.getSignature()).getParameterTypes();
+            return targetClass.getMethod(methodName, paramTypes).getAnnotation(ProtectedApi.class);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
