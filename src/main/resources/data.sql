@@ -4,6 +4,8 @@ DELETE FROM device_status;
 DELETE FROM part;
 DELETE FROM product;
 DELETE FROM device;
+DELETE FROM path;
+DELETE FROM storage;
 
 -- Device (설비)
 INSERT INTO device (id, name, target_temperature, target_humidity, base_production_count) VALUES
@@ -44,3 +46,19 @@ INSERT INTO device_status (id, device_id, temperature, humidity, timestamp) VALU
 
 -- device_status의 시퀀스를 마지막 id로 리셋
 SELECT setval('device_status_seq', (SELECT MAX(id) FROM device_status));
+
+-- Path (길)
+INSERT INTO path (id, startX, startY, endX, endY)
+VALUES
+    (1,0, 0, 5, 0), -- (0,0)-(5,0)
+    (2,1, 0, 1, 2), -- (1,0)-(1,2)
+    (3,4, 0, 4, 2), -- (4,0)-(4,2)
+    (4,1, 2, 2, 2), -- (1,2)-(2,2)
+    (5,3, 2, 4, 2); -- (3,2)-(4,2)
+SELECT setval('path_id_seq', (SELECT MAX(id) FROM path));
+
+-- Storage (저장고)
+INSERT INTO storage (id, x, y, name)
+VALUES (1,3, 2, 'S1'); -- (3,2)
+SELECT setval('storage_id_seq', (SELECT MAX(id) FROM storage));
+
