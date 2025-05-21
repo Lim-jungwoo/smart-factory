@@ -2,6 +2,17 @@
 
 Spring Boot 기반의 프로젝트입니다. 디버이스 상태를 기본으로, 부품 생산 및 제품 생산의 결과를 API로 제공합니다.
 
+## Swagger 주소
+* `localhost:8080/swagger-ui/index.html`
+
+## 로그인
+* 관리자
+  * 아이디 : admin
+  * 비밀번호 : password
+* 유저
+  * 아이디 : user
+  * 비밀번호 : password 
+
 ## ✨ Features
 
 ### 해당 디버이스의 상태 갱신
